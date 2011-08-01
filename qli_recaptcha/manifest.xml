@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest>
+	<field key="author" value="RPGRealms" />
+	<field key="version" value="1.2.1" />
+	<field key="description" value="Provides recaptcha support (Requires a recaptcha [http://www.google.com/recaptcha] account)." />
+	<field key="website" value="" />
+	<field key="copyright" value="(C) RPGRealms 2010" />
+	<field key="licence" value="GNU Public License version 2" />
+	<field key="elgg_version" value="2010030101" />
+</plugin_manifest>
