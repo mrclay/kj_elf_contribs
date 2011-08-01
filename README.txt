@@ -57,6 +57,9 @@ process to accept email address or DCF ID, and populates the Shibalike
 session with the appropriate content upon login for use by
 other applications such as Moodle.
 
+The plugin supplies a stripped down login view suitable for iframes 
+and accessible through http://elgg-url/shibalike/login
+
 The plugin also disables the user's ability to change their Elgg
 email address.
 
