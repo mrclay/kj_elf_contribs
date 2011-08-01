@@ -26,7 +26,7 @@ class ElggStore implements IStore {
 		    'dcfLastName' =>  $user->last_name,
 		    'elggUserId' => $user->guid,
 		    'elggUsername' => $user->username,
-		    'elggFullName' =>  $user->first_name . ' ' . $user->last_name,
+		    'elggFullName' =>  $user->name,
 		    'elggEmail' =>  $dcfEmail,
 		    'moodleUserId' => $user->moodleUserId,
 		    );    	
