@@ -29,6 +29,9 @@ function shibalike_init() {
 	// Mark users as authenticated upon Elgg login
 	elgg_register_event_handler('login','user','shibalike_handle_login');
 	
+	// Validate username
+	elgg_register_plugin_hook_handler('registeruser:validate:username', 'all', 'shibalike_validate_username',600);
+	
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('shibalike','shibalike_page_handler');
 	
@@ -135,4 +138,19 @@ function shibalike_getConfig() {
     // does the idpUrl matter for Elgg?
     $config->idpUrl = 'idp.php';
     return $config;
+}
+
+/**
+	Called by 'registeruser:validate:username' plugin hook
+ */
+function shibalike_validate_username($hook, $type, $value, $params) {
+
+	// white list for allowed characters (numbers, letters and period only)
+	$whitelist = '/[^a-zA-Z0-9.]/';
+
+	if (preg_match($whitelist, $params['username']) > 0) {
+		return FALSE;
+	} else {
+		return $value;
+	}
 }
