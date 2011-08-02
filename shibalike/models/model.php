@@ -225,34 +225,33 @@ function shibalike_generate_username($first_name,$last_name) {
 	
 	$existing_username = FALSE;
 	
+	// convert to ASCII
+	
 	$ascii_first_name = iconv("utf-8","ascii//TRANSLIT",$first_name);
 	$ascii_last_name = iconv("utf-8","ascii//TRANSLIT",$last_name);
 	
-	$username = strtolower($ascii_first_name[0].$ascii_last_name);
+	// replace everything except letters, numbers and periods
 	
-	// these characters should not appear in real names, but just in case
-	// someone tries to break the code
+	$whitelist = '/[^a-zA-Z0-9.]/';
 	
-	$blacklist2 = str_split('\'/\\"*& ?#%^(){}[]~?<>;|¬`@-+=');
+	$ascii_first_name = preg_replace($whitelist,'',$ascii_first_name);
+	$ascii_last_name = preg_replace($whitelist,'',$ascii_last_name);
 	
-	foreach($blacklist2 as $bad_char) {
-		if (strpos($username,$bad_char) !== FALSE) {
-			return FALSE;
-		}
-	}	
+	// construct a preliminary username
 	
-	// Check length
+	$username = strtolower(substr($ascii_first_name,0,1).$ascii_last_name);
+	
+	// pad out very short usernames
+	
 	if (isset($CONFIG->minusername)) {
 		$minusername = $CONFIG->minusername;
 	} else {
 		$minusername = 4;
 	}
 	
-	// pad out very short usernames
-	
 	if (strlen($username) < $minusername) {
 		$missing_length = $minusername-strlen($username);
-		$username .= substr("______",0,$missing_length);		
+		$username .= substr("xxxxxx",0,$missing_length);		
 	}
 	
 	// add numbers at the end if necessary
