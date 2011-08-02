@@ -4,6 +4,8 @@
 
     require('../../config.php');
     require('shibalike_lib.php');
+    
+    shibalike_require_valid_user();
 
     $PAGE->set_url('/auth/shibboleth/index.php');
 
@@ -20,8 +22,6 @@
         redirect($urltogo);
 
     }
-    
-    shibalike_require_valid_user();
 
     $pluginconfig   = get_config('auth/shibboleth');
     $shibbolethauth = get_auth_plugin('shibboleth');
