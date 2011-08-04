@@ -124,7 +124,7 @@ function shibalike_handle_login($event, $type, $user) {
 }
 
 function shibalike_getStateManager() {
-    $storage = new Shibalike\Util\UserlandSession\Storage\Files('SHIBALIKE_BASIC');
+    $storage = new Shibalike\Util\UserlandSession\Storage\Files('SHIBALIKE_BASIC', array('path' => '/tmp'));
     $session = Shibalike\Util\UserlandSession::factory($storage);
     return new Shibalike\StateManager\UserlandSession($session);
 }
