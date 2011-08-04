@@ -42,8 +42,7 @@ function shibalike_getStateManager() {
 
 function shibalike_getConfig() {
     $config = new Shibalike\Config();
-    // does the idpUrl matter for Elgg?
-    $config->idpUrl = 'http://localhost/elgg18/';
+    $config->idpUrl = ELGG_URL . 'login';
     return $config;
 }
 
