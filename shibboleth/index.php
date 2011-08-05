@@ -38,17 +38,15 @@
         // The random password consists of the first 8 letters of the base 64 encoded user ID
         // This password is never used unless the user account is converted to manual
 
-        // coepatch sclay 2010-08-11
+        // coepatch sclay 2011-08-05
         // set user's auth column to "shibboleth" if it's "ldap"
         $userConvertedToShib = null;
-        $sql = "SELECT id FROM mdl_user WHERE username=" . $db->Quote($frm->username) . " AND auth='ldap' LIMIT 1";
-        $theUser = $db->GetAll($sql);
-        if (isset($theUser[0]['id']) && is_numeric($theUser[0]['id'])) {
-            $sql = "UPDATE mdl_user SET auth = 'shibboleth' WHERE id = " . $theUser[0]['id'];
-            $db->Execute($sql);
-            $userConvertedToShib = $theUser[0]['id'];
+        $theUser = get_record('user', 'username', $frm->username, 'auth', 'ldap');
+        if ($theUser) {
+            $theUser->auth = 'shibboleth';
+            update_record('user', $theUser);
+            $userConvertedToShib = $theUser->id;
         }
-        // end coepatch
 
     /// Check if the user has actually submitted login data to us
 
@@ -56,11 +54,10 @@
 
             $USER = authenticate_user_login($frm->username, $frm->password);
 
-            // coepatch sclay 2010-08-11
+            // coepatch sclay 2011-08-05
             // revert auto-converted user back to LDAP
             if ($userConvertedToShib) {
-                $sql = "UPDATE mdl_user SET auth = 'ldap' WHERE id = " . $userConvertedToShib;
-                $db->Execute($sql);
+                set_field('user', 'auth', 'ldap', 'id', $userConvertedToShib);
             }
             // end coepatch
 
