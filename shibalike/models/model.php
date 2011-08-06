@@ -251,7 +251,8 @@ function shibalike_generate_username($first_name,$last_name) {
 	
 	if (strlen($username) < $minusername) {
 		$missing_length = $minusername-strlen($username);
-		$username .= substr("xxxxxx",0,$missing_length);		
+		// pad with 0 to avoid usernames with "xxx" :)
+		$username .= substr("000000",0,$missing_length);
 	}
 	
 	// add numbers at the end if necessary
