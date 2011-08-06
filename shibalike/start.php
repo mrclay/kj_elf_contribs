@@ -103,6 +103,16 @@ function shibalike_uservalidationbyemail_page_handler($page) {
 				elgg_pop_context();
 
 				login($user);
+                
+                // forward brand new users to their courses list
+                if (is_file($_SERVER['DOCUMENT_ROOT'] . '/elf-paths.php')) {
+                    $elfPaths = (require $_SERVER['DOCUMENT_ROOT'] . '/elf-paths.php');
+                } else {
+                    // for Kevin's environment
+                    $elfPaths['myCourses'] = '/my-courses/';
+                }
+                forward('http://' . $_SERVER['SERVER_NAME'] . $elfPaths['myCourses']);
+                
 			} else {
 				register_error(elgg_echo('email:confirm:fail'));
 			}
