@@ -121,6 +121,10 @@ function shibalike_uservalidationbyemail_page_handler($page) {
 function shibalike_handle_login($event, $type, $user) {
 	$idp = new Shibalike\IdP(shibalike_getStateManager(), shibalike_getAttrStore(), shibalike_getConfig());
 	$idp->markAsAuthenticated($user->username);
+    if ($idp->getAuthRequest()) {
+        // auth was requested outside Elgg, redirect there
+        $idp->redirect();
+    }
 }
 
 function shibalike_getStateManager() {
@@ -135,7 +139,7 @@ function shibalike_getAttrStore() {
 
 function shibalike_getConfig() {
     $config = new Shibalike\Config();
-    // does the idpUrl matter for Elgg?
+    // Elgg IS the IdP, so this doesn't matter
     $config->idpUrl = 'idp.php';
     return $config;
 }
