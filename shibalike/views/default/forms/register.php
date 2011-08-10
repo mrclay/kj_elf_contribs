@@ -35,24 +35,30 @@ if (elgg_is_sticky_form('register')) {
 ?>
 <div id="registration_first_part">
 <p><?php echo elgg_echo('shibalike:register:explanation'); ?></p>
-<div class="mtm">
-	<label><?php echo elgg_echo('shibalike:register:dcf_id:label'); ?></label><br />
-	<?php
-	echo elgg_view('input/text', array(
-		'name' => 'dcf_id',
-		'value' => $dcf_id,
-	));
-	?>
+<div class="yui3-g">
+    <div class="yui3-u" style="width:300px">
+        <label><?php echo elgg_echo('email'); ?></label><br />
+        <?php
+        echo elgg_view('input/text', array(
+            'name' => 'email',
+            'value' => $email,
+        ));
+        ?>
+    </div>
+    <div class="yui3-u" style="vertical-align:middle; width:50px; text-align: center">
+        <p><i>OR</i></p>
+    </div>
+    <div class="mtm yui3-u" style="width:140px; margin-top: 0">
+        <label><?php echo elgg_echo('shibalike:register:dcf_id:label'); ?></label><br />
+        <?php
+        echo elgg_view('input/text', array(
+            'name' => 'dcf_id',
+            'value' => $dcf_id,
+        ));
+        ?>
+    </div>
 </div>
-<div>
-	<label><?php echo elgg_echo('email'); ?></label><br />
-	<?php
-	echo elgg_view('input/text', array(
-		'name' => 'email',
-		'value' => $email,
-	));
-	?>
-</div>
+
 <div>
 	<label><?php echo elgg_echo('shibalike:register:first_name:label'); ?></label><br />
 	<?php

@@ -25,6 +25,9 @@ function shibalike_init() {
 	
 	// add to the admin css
 	elgg_extend_view('css/admin', 'shibalike/css');
+    
+    // add to the default css
+	elgg_extend_view('css/elgg', 'shibalike/css');
 	
 	// Mark users as authenticated upon Elgg login
 	elgg_register_event_handler('login','user','shibalike_handle_login');

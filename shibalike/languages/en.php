@@ -25,7 +25,7 @@ $english = array(
  * Registration text
  */
 
-	'shibalike:register:explanation' => 'Please enter your name, a password and either your DCF ID or email address to register.',
+	'shibalike:register:explanation' => 'Please enter your name, a password and either your email address or DCF ID to register.',
 	'shibalike:register:first_name:label' => "First name",
 	'shibalike:register:last_name:label' => "Last name",
 	'shibalike:register:dcf_id:label' => "DCF ID",
