@@ -57,7 +57,14 @@ if (count($user_guids) == 1) {
 if ($error) {
 	register_error($error_txt);
 } else {
-	system_message($message_txt);
+	if (count($user_guids) == 1) {
+        // new ELF user! 
+        if (is_file($_SERVER['DOCUMENT_ROOT'] . '/moodle/elf-redirector.php')) {
+            // forward to log into moodle, then my courses
+            forward('http://' . $_SERVER['SERVER_NAME'] . '/moodle/elf-redirector.php?dest=myCourses&loggedIn');
+        }
+    }
+    system_message($message_txt);
 }
 
 forward(REFERRER);
