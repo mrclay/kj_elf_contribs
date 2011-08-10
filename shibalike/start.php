@@ -107,14 +107,13 @@ function shibalike_uservalidationbyemail_page_handler($page) {
 
 				login($user);
                 
-                // forward brand new users to their courses list
-                if (is_file($_SERVER['DOCUMENT_ROOT'] . '/elf-paths.php')) {
-                    $elfPaths = (require $_SERVER['DOCUMENT_ROOT'] . '/elf-paths.php');
+                // new ELF user! 
+                if (is_file($_SERVER['DOCUMENT_ROOT'] . '/moodle/elf-redirector.php')) {
+                    // forward to log into moodle, then my courses
+                    forward('http://' . $_SERVER['SERVER_NAME'] . '/moodle/elf-redirector.php?dest=myCourses&loggedIn');
                 } else {
-                    // for Kevin's environment
-                    $elfPaths['myCourses'] = '/my-courses/';
+                    forward();
                 }
-                forward('http://' . $_SERVER['SERVER_NAME'] . $elfPaths['myCourses']);
                 
 			} else {
 				register_error(elgg_echo('email:confirm:fail'));
