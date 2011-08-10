@@ -11,7 +11,7 @@ function shibalike_get_email_from_dcf_id($dcf_id) {
 	}
 }
 
-function shibalike_get_dcf_id_from_email($dcf_id) {
+function shibalike_get_dcf_id_from_email($email) {
 	$email = sanitize_string($email);
 	$query = "SELECT dcf_id FROM elf_users WHERE email = \"$email\"";
 	$data = get_data($query);
