@@ -8,9 +8,15 @@ class ElggStore implements IStore {
 
     public function __construct()
     {
-    	// should anything go here?
+        if (! function_exists('elgg_is_logged_in')) {
+            throw new Exception('An active Elgg environment is required.');
+        }
     }
 
+    /**
+     * @param string $username
+     * @return array
+     */
     public function fetchAttrs($username)
     {
     	$user = get_user_by_username($username);
