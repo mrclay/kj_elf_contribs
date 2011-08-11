@@ -45,7 +45,18 @@ $english = array(
 	'shibalike:register:display_name:explanation' => "Your display name will be how ELF Community Members will see you. We've offered a suggestion, but you may change it.",
 
 /**
- * Settings text
+ * Request password text text
+ */
+	'shibalike:user:password:text' => 'To request a new password, enter your email address or DCF ID below and click the Request button.',	
+	'shibalike:requestnewpassword:id_field' => "Email or DCF ID",
+		
+/**
+ * User settings text
+ */
+	'shibalike:your_name:settings:title' => "Your name",
+		
+/**
+ * Admin settings text
  */
 	'shibalike:settings:moodle_config_file_name:title' => "Moodle configuration file location",
 );

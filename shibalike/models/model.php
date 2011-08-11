@@ -29,6 +29,14 @@ function shibalike_update_elf_users_table($dcf_id,$username) {
 	return update_data($query);
 }
 
+function shibalike_insert_into_elf_users_table($dcf_id,$email,$username) {
+	$dcf_id = sanitize_string($dcf_id);
+	$email = sanitize_string($email);
+	$username = sanitize_string($username);
+	$query = "INSERT INTO elf_users(dcf_id,email,username) VALUES ('$dcf_id','$email','$username')";
+	return insert_data($query);
+}
+
 function shibalike_get_moodle_config($config_file_name) {
 	
 	$config = (require($config_file_name));
@@ -38,7 +46,6 @@ function shibalike_get_moodle_config($config_file_name) {
 
 function shibalike_moodle_confirmation($username) {
 	$username = sanitize_string($username);
-	error_log("called from moodle:".$username);
 	$dbprefix = shibalike_get_moodle_db_prefix();
 	$query = "SELECT id FROM {$dbprefix}user WHERE username = \"$username\"";
 	$result =  shibalike_run_moodle_query($query);
