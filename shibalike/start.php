@@ -20,8 +20,10 @@ function shibalike_init() {
 	elgg_register_library('elgg:shibalike', elgg_get_plugins_path() . 'shibalike/models/model.php');
 	
 	// register shibalike's JavaScript
-	$blog_js = elgg_get_simplecache_url('js', 'shibalike/process_registration');
-	elgg_register_js('elgg.shibalike', $blog_js);
+	$shibalike_js = elgg_get_simplecache_url('js', 'shibalike/process_registration');
+	elgg_register_js('elgg.shibalike', $shibalike_js);
+	$shibalike_js = elgg_get_simplecache_url('js', 'shibalike/manage_display_name');
+	elgg_register_js('elgg.shibalike.displayName', $shibalike_js);
 	
 	// add to the admin css
 	elgg_extend_view('css/admin', 'shibalike/css');
@@ -53,6 +55,9 @@ function shibalike_init() {
 	elgg_register_action('login', "$action_path/login.php", 'public');
 	// over-ride validate action
 	elgg_register_action('uservalidationbyemail/validate', elgg_get_plugins_path() . "shibalike/actions/uservalidationbyemail/validate.php",'public');
+	// over-ride requestnewpassword action
+	elgg_register_action('user/requestnewpassword', elgg_get_plugins_path() . "shibalike/actions/user/requestnewpassword.php",'public');
+	
 }
 
 function shibalike_register_page_handler($page) {

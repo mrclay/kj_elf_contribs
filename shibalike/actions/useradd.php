@@ -6,6 +6,8 @@
  * @subpackage Core
  */
 
+elgg_load_library('elgg:shibalike');
+
 elgg_make_sticky_form('useradd');
 
 // Get variables
@@ -14,6 +16,8 @@ $password = get_input('password');
 $password2 = get_input('password2');
 $email = get_input('email');
 $name = get_input('name');
+$first_name = get_input('first_name');
+$last_name = get_input('last_name');
 
 $admin = get_input('admin');
 if (is_array($admin)) {
@@ -26,6 +30,11 @@ try {
 
 	if (((trim($password) != "") && (strcmp($password, $password2) == 0)) && ($guid)) {
 		$new_user = get_entity($guid);
+		$new_user->first_name = $first_name;
+		$new_user->last_name = $last_name;
+		
+		shibalike_insert_into_elf_users_table('elf_'.$username,$email,$username);
+		
 		if (($guid) && ($admin)) {
 			$new_user->makeAdmin();
 		}
