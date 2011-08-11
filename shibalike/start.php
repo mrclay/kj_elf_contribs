@@ -67,7 +67,8 @@ function shibalike_register_page_handler($page) {
 function shibalike_page_handler($page) {		
 	if (isset($page[0])) {
 		if ($page[0] == 'login') {
-			echo elgg_view_page('',elgg_view_form('shibalike/login'),'shibalike_iframe');
+            // regular login form is fine
+			echo elgg_view_page('',elgg_view_form('login'),'shibalike_iframe');
 		} else if (($page[0] == 'moodle_confirmation') && isset($page[1])) {
 			elgg_load_library('elgg:shibalike');
 			shibalike_moodle_confirmation($page[1]);
