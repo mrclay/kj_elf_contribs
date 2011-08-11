@@ -139,9 +139,20 @@ function shibalike_handle_login($event, $type, $user) {
     }
 }
 
+/**
+ * @return Shibalike\Util\UserlandSession
+ */
+function shibalike_getUserlandSession() {
+    static $session = null;
+    if (! $session) {
+        $storage = new Shibalike\Util\UserlandSession\Storage\Files('SHIBALIKE_BASIC', array('path' => '/tmp'));
+        $session = Shibalike\Util\UserlandSession::factory($storage);
+    }
+    return $session;
+}
+
 function shibalike_getStateManager() {
-    $storage = new Shibalike\Util\UserlandSession\Storage\Files('SHIBALIKE_BASIC', array('path' => '/tmp'));
-    $session = Shibalike\Util\UserlandSession::factory($storage);
+    $session = shibalike_getUserlandSession();
     return new Shibalike\StateManager\UserlandSession($session);
 }
 
