@@ -96,6 +96,8 @@ if (elgg_is_sticky_form('register')) {
 	?>
 </div>
 <br />
+<?php echo elgg_view('input/captcha'); ?>
+
 <?php
 echo elgg_view('input/button', array('id' => 'continue_button', 'value' => elgg_echo('shibalike:register:continue')));
 ?>
