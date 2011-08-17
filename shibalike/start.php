@@ -114,9 +114,9 @@ function shibalike_uservalidationbyemail_page_handler($page) {
 				login($user);
                 
                 // new ELF user! 
-                if (is_file($_SERVER['DOCUMENT_ROOT'] . '/moodle/elf-redirector.php')) {
+                if (is_file($_SERVER['DOCUMENT_ROOT'] . '/elf-paths.php')) {
                     // forward to log into moodle, then my courses
-                    forward('http://' . $_SERVER['SERVER_NAME'] . '/moodle/elf-redirector.php?dest=myCourses&loggedIn');
+                    forward('http://' . $_SERVER['SERVER_NAME'] . '/moodle/auth/shibboleth/?dest=/courses/');
                 } else {
                     forward();
                 }

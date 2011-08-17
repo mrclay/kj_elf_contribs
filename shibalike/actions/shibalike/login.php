@@ -31,7 +31,7 @@ $persistent = get_input("persistent", FALSE);
 $result = FALSE;
 
 $errorDestination = '';
-if (is_file($_SERVER['DOCUMENT_ROOT'] . '/moodle/elf-redirector.php')) {
+if (is_file($_SERVER['DOCUMENT_ROOT'] . '/elf-paths.php')) {
     // within ELF, login error page IS homepage
     $errorDestination = 'http://' . $_SERVER['SERVER_NAME'] . '/';
 }
