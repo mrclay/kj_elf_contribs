@@ -42,8 +42,9 @@
         // set user's auth column to "shibboleth" if it's "ldap"
         $userConvertedToShib = null;
         global $DB;
-        $theUser = $DB->get_record('user', array('username' => $frm->username, 'auth' => 'ldap'));
-        if ($theUser) {
+        $theUser = $DB->get_record('user', array('username' => $frm->username));
+        if ($theUser && $theUser->auth != 'shibboleth') {
+            $usersOldAuthMethod = $theUser->auth;
             $theUser->auth = 'shibboleth';
             $DB->update_record('user', $theUser);
             $userConvertedToShib = $theUser->id;
@@ -59,7 +60,7 @@
             // coepatch sclay 2011-08-05
             // revert auto-converted user back to LDAP
             if ($userConvertedToShib) {
-                $DB->set_field('user', 'auth', 'ldap', array('id' => $userConvertedToShib));
+                $DB->set_field('user', 'auth', $usersOldAuthMethod, array('id' => $userConvertedToShib));
             }
             // end coepatch
 
