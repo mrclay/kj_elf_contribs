@@ -45,9 +45,7 @@ if ((empty($dcf_id) && empty($email) && empty($username)) || empty($password)) {
 if (strpos($username, '@') !== FALSE && ($users = get_user_by_email($username))) {
 	$username = $users[0]->username;
 } else if ($dcf_id) {
-	$email = shibalike_get_email_from_dcf_id($dcf_id);
-	$users = get_user_by_email($email);
-	$username = $users[0]->username;
+	$username = shibalike_get_username_from_dcf_id($dcf_id);
 } else if ($username) {
 	$email = shibalike_get_email_from_dcf_id($username);
 	$users = get_user_by_email($email);

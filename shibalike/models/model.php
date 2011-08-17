@@ -22,6 +22,17 @@ function shibalike_get_dcf_id_from_email($email) {
 	}
 }
 
+function shibalike_get_username_from_dcf_id($dcf_id) {
+	$dcf_id = sanitize_string($dcf_id);
+	$query = "SELECT username FROM elf_users WHERE dcf_id = \"$dcf_id\"";
+	$data = get_data($query);
+	if ($data) {
+		return $data[0]->username;
+	} else {
+		return FALSE;
+	}
+}
+
 function shibalike_update_elf_users_table($dcf_id,$username) {
 	$dcf_id = sanitize_string($dcf_id);
 	$username = sanitize_string($username);
