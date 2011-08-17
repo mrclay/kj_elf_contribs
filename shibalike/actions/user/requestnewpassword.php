@@ -15,9 +15,8 @@ $username = get_input('username');
 if (strpos($username, '@') !== FALSE && ($users = get_user_by_email($username))) {
 	$user = $users[0];
 } else {
-	$email = shibalike_get_email_from_dcf_id($username);
-	$users = get_user_by_email($email);
-	$user = $users[0];
+	$username = shibalike_get_username_from_dcf_id($username);
+    $user = get_user_by_username($username);
 }
 
 if ($user) {
