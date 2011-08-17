@@ -41,7 +41,10 @@ function shibalike_update_elf_users_table($dcf_id,$username) {
 }
 
 function shibalike_insert_into_elf_users_table($dcf_id,$email,$username) {
-	$dcf_id = sanitize_string($dcf_id);
+    if (FALSE !== shibalike_get_email_from_dcf_id($dcf_id)) {
+        return true;
+    }
+    $dcf_id = sanitize_string($dcf_id);
 	$email = sanitize_string($email);
 	$username = sanitize_string($username);
 	$query = "INSERT INTO elf_users(dcf_id,email,username) VALUES ('$dcf_id','$email','$username')";
