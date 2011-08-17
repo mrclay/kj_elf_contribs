@@ -23,8 +23,6 @@ if (isset($_SESSION['last_forward_from']) && $_SESSION['last_forward_from']) {
 }
 
 $username = get_input('username');
-
-$dcf_id = get_input('dcf_id');
 $email = get_input('email');
 $password = get_input("password");
 $persistent = get_input("persistent", FALSE);
@@ -36,7 +34,7 @@ if (is_file($_SERVER['DOCUMENT_ROOT'] . '/elf-paths.php')) {
     $errorDestination = 'http://' . $_SERVER['SERVER_NAME'] . '/';
 }
 
-if ((empty($dcf_id) && empty($email) && empty($username)) || empty($password)) {
+if (empty($username) || empty($password)) {
 	register_error(elgg_echo('login:empty'));
 	forward($errorDestination);
 }
@@ -44,17 +42,8 @@ if ((empty($dcf_id) && empty($email) && empty($username)) || empty($password)) {
 // check if logging in with email address
 if (strpos($username, '@') !== FALSE && ($users = get_user_by_email($username))) {
 	$username = $users[0]->username;
-} else if ($dcf_id) {
-	$username = shibalike_get_username_from_dcf_id($dcf_id);
-} else if ($username) {
-	$email = shibalike_get_email_from_dcf_id($username);
-	$users = get_user_by_email($email);
-	$username = $users[0]->username;
-} else if ($email) {
-	$users = get_user_by_email($email);
-	if ($users) {
-		$username = $users[0]->username;
-	}
+} else {
+	$username = shibalike_get_username_from_dcf_id($username);   
 }
 
 $result = elgg_authenticate($username, $password);
