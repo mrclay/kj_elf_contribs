@@ -49,6 +49,22 @@ $english = array(
  */
 	'shibalike:user:password:text' => 'To request a new password, enter your email address or DCF ID below and click the Request button.',	
 	'shibalike:requestnewpassword:id_field' => "Email or DCF ID",
+    
+    'user:password:resetreq:success' => 'Please check your email to continue.',
+    'user:password:success' => "Your password has been changed.",
+    'email:resetreq:body' => "Hi %s,
+
+Someone (from IP address %s) has requested a new password for your account.
+
+If you requested this, click on the link below, otherwise ignore this message.
+
+%s
+",
+    'email:resetpassword:body' => "Hi %s,
+
+Your password has been reset to: %s
+
+Please log in with this password and change it under Community > Settings.",
 		
 /**
  * User settings text
