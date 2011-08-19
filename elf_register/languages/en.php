@@ -69,6 +69,26 @@ Please log in with this password and change it under Community > Settings.",
  * User settings text
  */
 	'elf_register:your_name:settings:title' => "Your name",
+		
+/**
+* Admin settings text
+*/
+
+    'elf_register:adduser:dcf_id_note' => "This user's DCF_ID will be: %s",
+    'elf_register:useradd:body' => '
+%s,
+
+A user account has been created for you at %s. To log in, visit:
+
+%s
+
+And log in with these user credentials:
+
+DCF_ID: %s
+Password: %s
+
+You will be logged in as "%s", and you should change your password immediately.
+',
 
 
 );
