@@ -42,8 +42,9 @@
         // set user's auth column to "shibboleth" if it's "ldap"
         $userConvertedToShib = null;
         global $DB;
-        $theUser = $DB->get_record('user', array('username' => $frm->username, 'auth' => 'ldap'));
-        if ($theUser) {
+        $theUser = $DB->get_record('user', array('username' => $frm->username));
+        if ($theUser && $theUser->auth != 'shibboleth') {
+            $usersOldAuthMethod = $theUser->auth;
             $theUser->auth = 'shibboleth';
             $DB->update_record('user', $theUser);
             $userConvertedToShib = $theUser->id;
@@ -59,7 +60,7 @@
             // coepatch sclay 2011-08-05
             // revert auto-converted user back to LDAP
             if ($userConvertedToShib) {
-                $DB->set_field('user', 'auth', 'ldap', array('id' => $userConvertedToShib));
+                $DB->set_field('user', 'auth', $usersOldAuthMethod, array('id' => $userConvertedToShib));
             }
             // end coepatch
 
@@ -82,13 +83,22 @@
                 $urltogo = $CFG->wwwroot.'/user/edit.php?id='.$USER->id.'&amp;course='.SITEID;
                 // We don't delete $SESSION->wantsurl yet, so we get there later
 
-            } else if (isset($SESSION->wantsurl) and (strpos($SESSION->wantsurl, $CFG->wwwroot) === 0)) {
+            } else if (isset($SESSION->wantsurl) and (strpos($SESSION->wantsurl, 'http://' . $_SERVER['SERVER_NAME']) === 0)) {
                 $urltogo = $SESSION->wantsurl;    /// Because it's an address in this site
                 unset($SESSION->wantsurl);
 
             } else {
                 $urltogo = $CFG->wwwroot.'/';      /// Go to the standard home page
                 unset($SESSION->wantsurl);         /// Just in case
+            }
+            
+            if (! empty($_GET['dest'])) {
+                $proposedDest = (string) $_GET['dest'];
+                if ('/' === $proposedDest[0]) {
+                    $urltogo = 'http://' . $_SERVER['SERVER_NAME'] . $proposedDest;
+                } else if (0 === strpos($proposedDest, 'http://' . $_SERVER['SERVER_NAME'])) {
+                    $urltogo = $proposedDest;
+                }
             }
 
             /// Go to my-moodle page instead of homepage if defaulthomepage enabled
