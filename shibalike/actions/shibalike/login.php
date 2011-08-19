@@ -6,7 +6,7 @@
 
 elgg_load_library('elgg:shibalike');
 if (elgg_plugin_exists('elf_register')) {
-	elgg_load_library('elgg:shibalike');
+	elgg_load_library('elgg:elf_register');
 }
 
 // set forward url
