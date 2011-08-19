@@ -32,8 +32,10 @@ try {
 		$new_user = get_entity($guid);
 		$new_user->first_name = $first_name;
 		$new_user->last_name = $last_name;
+
+        $dcf_id = 'elf_' . $username;
 		
-		shibalike_insert_into_elf_users_table('elf_'.$username,$email,$username);
+		shibalike_insert_into_elf_users_table($dcf_id, $email, $username);
 		
 		if (($guid) && ($admin)) {
 			$new_user->makeAdmin();
@@ -45,18 +47,22 @@ try {
 		// @todo ugh, saving a guid as metadata!
 		$new_user->created_by_guid = elgg_get_logged_in_user_guid();
 
-		$subject = elgg_echo('useradd:subject');
-		$body = elgg_echo('useradd:body', array(
-			$name,
-			elgg_get_site_entity()->name,
-			elgg_get_site_entity()->url,
-			$username,
-			$password,
-		));
-
-		notify_user($new_user->guid, elgg_get_site_entity()->guid, $subject, $body);
+        if (! preg_match('/@(madeup|example)\\.(com|org)$/', $email)) {
+            $subject = elgg_echo('useradd:subject');
+            $body = elgg_echo('shibalike:useradd:body', array(
+                $name,
+                elgg_get_site_entity()->name,
+                elgg_get_site_entity()->url,
+                $username,
+                $password,
+                $dcf_id,
+            ));
+            notify_user($new_user->guid, elgg_get_site_entity()->guid, $subject, $body);
+        }
 
 		system_message(elgg_echo("adduser:ok", array(elgg_get_site_entity()->name)));
+        system_message(elgg_echo("shibalike:adduser:dcf_id_note", array($dcf_id)));
+
 	} else {
 		register_error(elgg_echo("adduser:bad"));
 	}

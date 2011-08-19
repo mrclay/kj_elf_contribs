@@ -75,6 +75,22 @@ Please log in with this password and change it under Community > Settings.",
  * Admin settings text
  */
 	'shibalike:settings:moodle_config_file_name:title' => "Moodle configuration file location",
+    'shibalike:adduser:dcf_id_note' => "This user's DCF_ID will be: %s",
+    'shibalike:useradd:body' => '
+%s,
+
+A user account has been created for you at %s. To log in, visit:
+
+%s
+
+And log in with these user credentials:
+
+DCF_ID: %s
+Password: %s
+
+You will be logged in as "%s", and you should change your password immediately.
+',
+
 );
 				
 add_translation("en",$english);
