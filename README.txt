@@ -1,6 +1,6 @@
 README
 
-This zip file includes three plugins.
+This project includes four plugins.
 
 *shibboleth*
 
@@ -50,18 +50,26 @@ myclasses/Shibalike/Attr/Store/ElggStore.php
 If you want to move the library location, edit the first line of
 mod/shibalike/start.php.
 
-The shibalike plugin changes the Elgg registration process to add
-first_name, last_name and dcf_id fields, updates the username field
-in the elf_users table upon email confirmation, changes the login
-process to accept email address or DCF ID, and populates the Shibalike
-session with the appropriate content upon login for use by
-other applications such as Moodle.
+The shibalike plugin changes the login process to accept email address
+or DCF ID, and populates the Shibalike session with the appropriate 
+content upon login for use by other applications such as Moodle.
 
 The plugin supplies a stripped down login view suitable for iframes 
 and accessible through http://elgg-url/shibalike/login
 
+elf_register
+
+This Elgg plugin changes the Elgg registration process to a two step 
+process with the passwords and other information collected only after 
+the email address has been confirmed. 
+
+It adds first_name, last_name and dcf_id fields, and updates the 
+username field in the elf_users table after the registration
+process is complete,
+
 The plugin also disables the user's ability to change their Elgg
-email address.
+email address, and modifies the password reset form and the admin user 
+creation form.
 
 *qli_recaptcha*
 
