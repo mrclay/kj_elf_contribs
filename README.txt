@@ -85,13 +85,7 @@ work properly.
 I am happy to work on any of these issues once I receive relevant
 input/feedback:
 
-The Elgg admin user creation system has not been altered yet and will need
-to be if admin created accounts are to work with Moodle.
-
-Elgg's reset-my-password feature currently only accepts username and email
-address. It should probably be changed to accept DCF IDs instead of usernames.
-
-Moodle will allow Shibalike logins but will not currently allow you to edit 
+Moodle will allow Shibalike logins but will not currently allow you to edit
 your profile without supplying your city/town and country.
 
 It also allows you to change your email address, username, first name, last name
