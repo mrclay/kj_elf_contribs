@@ -7,7 +7,7 @@
  * 
  */
 
-elgg_load_js('elgg.shibalike.displayName');
+elgg_load_js('elgg.elf_register.displayName');
 
 $name = $username = $email = $password = $password2 = $admin = '';
 
@@ -25,24 +25,24 @@ if ((elgg_get_logged_in_user_entity()->isAdmin()) && ($vars['show_admin'])) {
 }
 ?>
 <div>
-	<label><?php echo elgg_echo('shibalike:register:first_name:label');?></label><br />
+	<label><?php echo elgg_echo('elf_register:register:first_name:label');?></label><br />
 	<?php
 	echo elgg_view('input/text', array(
 		'name' => 'first_name',
 		'value' => $first_name,
 		'autocomplete'=>'off',
-		'id'=>'shibalike-first-name',
+		'id'=>'elf-register-first-name',
 	));
 	?>
 </div>
 <div>
-	<label><?php echo elgg_echo('shibalike:register:last_name:label');?></label><br />
+	<label><?php echo elgg_echo('elf_register:register:last_name:label');?></label><br />
 	<?php
 	echo elgg_view('input/text', array(
 		'name' => 'last_name',
 		'value' => $last_name,
 		'autocomplete'=>'off',
-		'id'=>'shibalike-last-name',
+		'id'=>'elf-register-last-name',
 	));
 	?>
 </div>
@@ -53,7 +53,7 @@ if ((elgg_get_logged_in_user_entity()->isAdmin()) && ($vars['show_admin'])) {
 		'name' => 'name',
 		'value' => $name,
 		'autocomplete'=>'off',
-		'id'=>'shibalike-display-name',
+		'id'=>'elf-register-display-name',
 	));
 	?>
 </div>

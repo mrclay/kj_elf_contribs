@@ -5,6 +5,9 @@
  */
 
 elgg_load_library('elgg:shibalike');
+if (elgg_plugin_exists('elf_register')) {
+	elgg_load_library('elgg:elf_register');
+}
 
 // set forward url
 if (isset($_SESSION['last_forward_from']) && $_SESSION['last_forward_from']) {
@@ -43,7 +46,9 @@ if (empty($username) || empty($password)) {
 if (strpos($username, '@') !== FALSE && ($users = get_user_by_email($username))) {
 	$username = $users[0]->username;
 } else {
-	$username = shibalike_get_username_from_dcf_id($username);   
+	if (elgg_plugin_exists('elf_register')) {
+		$username = elf_register_get_username_from_dcf_id($username);
+	}   
 }
 
 $result = elgg_authenticate($username, $password);

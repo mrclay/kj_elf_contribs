@@ -5,17 +5,17 @@
  * @package Elgg.Core
  * @subpackage User.Account
  * 
- * Modified for shibalike
+ * Modified for elf_register
  */
 
-elgg_load_library('elgg:shibalike');
+elgg_load_library('elgg:elf_register');
 
 $username = get_input('username');
 
 if (strpos($username, '@') !== FALSE && ($users = get_user_by_email($username))) {
 	$user = $users[0];
 } else {
-	$username = shibalike_get_username_from_dcf_id($username);
+	$username = elf_register_get_username_from_dcf_id($username);
     $user = get_user_by_username($username);
 }
 

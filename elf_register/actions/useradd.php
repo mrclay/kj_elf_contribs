@@ -6,7 +6,7 @@
  * @subpackage Core
  */
 
-elgg_load_library('elgg:shibalike');
+elgg_load_library('elgg:elf_register');
 
 elgg_make_sticky_form('useradd');
 
@@ -35,8 +35,8 @@ try {
 
         $dcf_id = 'elf_' . $username;
 		
-		shibalike_insert_into_elf_users_table($dcf_id, $email, $username);
-		
+		elf_register_insert_into_elf_users_table($dcf_id, $email, $username);
+
 		if (($guid) && ($admin)) {
 			$new_user->makeAdmin();
 		}
@@ -49,7 +49,7 @@ try {
 
         if (! preg_match('/@(madeup|example)\\.(com|org)$/', $email)) {
             $subject = elgg_echo('useradd:subject');
-            $body = elgg_echo('shibalike:useradd:body', array(
+            $body = elgg_echo('elf_register:useradd:body', array(
                 $name,
                 elgg_get_site_entity()->name,
                 elgg_get_site_entity()->url,
@@ -61,7 +61,7 @@ try {
         }
 
 		system_message(elgg_echo("adduser:ok", array(elgg_get_site_entity()->name)));
-        system_message(elgg_echo("shibalike:adduser:dcf_id_note", array($dcf_id)));
+        system_message(elgg_echo("elf_register:adduser:dcf_id_note", array($dcf_id)));
 
 	} else {
 		register_error(elgg_echo("adduser:bad"));

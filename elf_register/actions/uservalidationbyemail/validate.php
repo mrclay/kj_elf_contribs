@@ -38,8 +38,8 @@ foreach ($user_guids as $guid) {
 	} else {
 		// success, so update elf_users table
 		if ($user->dcf_id) {
-			elgg_load_library('elgg:shibalike');
-			shibalike_update_elf_users_table($user->dcf_id,$user->username);
+			elgg_load_library('elgg:elf_register');
+			elf_register_update_elf_users_table($user->dcf_id,$user->username);
 		}
 	}
 }

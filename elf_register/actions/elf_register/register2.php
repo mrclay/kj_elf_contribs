@@ -4,50 +4,52 @@
  *
  * @package Elgg.Core
  * @subpackage User.Account
- * 
- * modified by Kevin Jardine, Radagast Solutions
  */
 
-elgg_load_library('elgg:shibalike');
+elgg_load_library('elgg:elf_register');
 
 elgg_make_sticky_form('register');
 
 // Get variables
 $username = get_input('username');
-$name = get_input('name');
 $password = get_input('password');
 $password2 = get_input('password2');
-$email = get_input('email');
-$dcf_id = get_input('dcf_id');
-$first_name = get_input('first_name');
-$last_name = get_input('last_name');
 
+$first_name = trim(get_input('first_name'));
+$last_name = trim(get_input('last_name'));
+$name = trim(get_input('name'));
 $friend_guid = (int) get_input('friend_guid', 0);
 $invitecode = get_input('invitecode');
 
-// do some plugin-specific
+$register_data_guid = get_input('register_data_guid');
+$validation_code = get_input('validation_code');
+
+$access_status = elgg_get_ignore_access();
+elgg_set_ignore_access(TRUE);
+
+$data = elf_register_get_validation_entity($register_data_guid, $validation_code);
+$email = $data->email;
+$dcf_id = $data->dcf_id;
+
+if (!$data) {
+	register_error(elgg_echo('elf_register:invalid_code_error'));
+	elgg_set_ignore_access($access_status);
+	forward();
+}
+
+if (!$first_name || !$last_name) {
+	register_error(elgg_echo('elf_register:register:error:missing_first_or_last_name'));
+	elgg_set_ignore_access($access_status);
+	forward(REFERER);
+}
+
+if (!elf_register_validate_username($username)) {
+	register_error(elgg_echo('elf_register:register:error:invalid_username'));
+	elgg_set_ignore_access($access_status);
+	forward(REFERER);
+}
 
 if (elgg_get_config('allow_registration')) {
-	$error = FALSE;
-	
-	// DCF sanity checking
-	// The JavaScript form handling should have already prevented these errors.
-	// These checks are just sanity checking for error conditions that should never actually occur.
-	
-	if (!$email && !$dcf_id) {
-		$error = TRUE;
-		register_error(elgg_echo('shibalike:register:error:either_dcf_id_or_email_required'));
-	} else if ($dcf_id && !($email = shibalike_get_email_from_dcf_id($dcf_id))) {
-		$error = TRUE;
-		register(elgg_echo('shibalike:register:error:invalid_dcf_id'));
-	} else if (!$dcf_id && !($dcf_id = shibalike_get_dcf_id_from_email($email)) && !elgg_is_admin_logged_in()) {
-		$error = TRUE;
-		register_error(elgg_echo('shibalike:register:error:invalid_email'));
-	}
-	if ($error) {
-		forward(REFERER);
-		exit;
-	}
 	try {
 		if (trim($password) == "" || trim($password2) == "") {
 			throw new RegistrationException(elgg_echo('RegistrationException:EmptyPassword'));
@@ -62,12 +64,18 @@ if (elgg_get_config('allow_registration')) {
 		if ($guid) {
 			elgg_clear_sticky_form('register');
 			
-			$new_user = get_entity($guid);
+			// delete temporary registration data
+			$data->delete();
 			
-			// TODO: make sure that these $new_user updates don't clash with Elgg's permission system
+			$new_user = get_entity($guid);
 			$new_user->dcf_id = $dcf_id;
 			$new_user->first_name = $first_name;
 			$new_user->last_name = $last_name;
+			
+			elf_register_update_elf_users_table($dcf_id,$username);
+			
+			// restore previous permissions status
+			elgg_set_ignore_access($access_status);
 
 			// allow plugins to respond to self registration
 			// note: To catch all new users, even those created by an admin,
@@ -88,6 +96,10 @@ if (elgg_get_config('allow_registration')) {
 				// for the plugin hooks system.
 				throw new RegistrationException(elgg_echo('registerbad'));
 			}
+			
+			// this plugin handles email validation before this stage, so go ahead and validate the new user
+			
+			elgg_set_user_validation_status($guid, true, 'email');
 
 			system_message(elgg_echo("registerok", array(elgg_get_site_entity()->name)));
 
@@ -95,6 +107,13 @@ if (elgg_get_config('allow_registration')) {
 			// plugin that has disabled the user
 			try {
 				login($new_user);
+				// new ELF user! 
+                if (is_file($_SERVER['DOCUMENT_ROOT'] . '/elf-paths.php')) {
+                    // forward to log into moodle, then my courses
+                    forward('http://' . $_SERVER['SERVER_NAME'] . '/moodle/auth/shibboleth/?dest=/courses/');
+                } else {
+                    forward();
+                }
 			} catch (LoginException $e) {
 				// do nothing
 			}
