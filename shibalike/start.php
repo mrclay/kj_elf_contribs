@@ -73,8 +73,11 @@ function shibalike_page_handler($page) {
 	if (isset($page[0])) {
 		if ($page[0] == 'login') {
             // regular login form is fine
-			echo elgg_view_page('',elgg_view_form('login'),'shibalike_iframe');
-		} else if (($page[0] == 'moodle_confirmation') && isset($page[1])) {
+            $loginIframe = elgg_view_page('',elgg_view_form('login'),'shibalike_iframe');
+            // rewrite action so full HTTPS login is possible w/o warning
+            $loginIframe = preg_replace('@ action="http://[^/]+/@', ' action="/', $loginIframe);
+            echo $loginIframe;
+        } else if (($page[0] == 'moodle_confirmation') && isset($page[1])) {
 			elgg_load_library('elgg:shibalike');
 			shibalike_moodle_confirmation($page[1]);
 		}
