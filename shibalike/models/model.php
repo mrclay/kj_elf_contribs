@@ -7,6 +7,7 @@ function shibalike_get_moodle_config($config_file_name) {
 	return $config;
 }
 
+// echoes int for testing from moodle side
 function shibalike_moodle_confirmation($username) {
 	$username = sanitize_string($username);
 	$dbprefix = shibalike_get_moodle_db_prefix();
@@ -17,8 +18,11 @@ function shibalike_moodle_confirmation($username) {
 		$user = get_user_by_username($username);
 		if($user) {
 			$user->moodleUserId = $id;
+			echo "1";
+			return;
 		}
 	}
+	echo "0";
 }
 
 function shibalike_get_moodle_db_prefix() {

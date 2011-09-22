@@ -57,6 +57,11 @@
 
             $USER = authenticate_user_login($frm->username, $frm->password);
 
+            // make sure early users get their Elgg metadata set 
+            if (empty($_SERVER['moodleUserId'])) {
+                shibalike_inform_elgg($USER);
+            }
+
             // coepatch sclay 2011-08-05
             // revert auto-converted user back to LDAP
             if ($userConvertedToShib) {
