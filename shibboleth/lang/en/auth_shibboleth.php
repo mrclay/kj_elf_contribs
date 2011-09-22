@@ -61,6 +61,6 @@ $string['shib_not_set_up_error'] = 'Shibboleth authentication doesn\'t seem to b
 $string['auth_shib_elggurl'] = "Elgg URL (needs closing slash)";
 $string['auth_shib_libdir'] = "Shibalike library directory";
 $string['auth_shib_elggurlhelp'] = "Required so that Shibalike can talk to Elgg.";
-$string['auth_shib_libdirhelp'] = "Required so that Shibalike can operate.";
+$string['auth_shib_libdirhelp'] = "Required so that Shibalike can operate (not required if Shibalike in include_path).";
 
 $string['pluginname'] = 'Shibboleth';
