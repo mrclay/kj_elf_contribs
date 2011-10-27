@@ -9,7 +9,18 @@
 
     $PAGE->set_url('/auth/shibboleth/index.php');
 
-    if (isloggedin() && !isguestuser()) {      // Nothing to do
+    $pluginconfig   = get_config('auth/shibboleth');
+    $shibbolethauth = get_auth_plugin('shibboleth');
+
+    // Check whether Shibboleth is configured properly
+    if (empty($pluginconfig->user_attribute)) {
+        print_error('shib_not_set_up_error', 'auth');
+    }
+
+    if (isloggedin()
+        && !empty($_SERVER[$pluginconfig->user_attribute])
+        && ($USER->username === $_SERVER[$pluginconfig->user_attribute]))
+    {
         if (isset($SESSION->wantsurl) and (strpos($SESSION->wantsurl, $CFG->wwwroot) === 0)) {
             $urltogo = $SESSION->wantsurl;    /// Because it's an address in this site
             unset($SESSION->wantsurl);
@@ -20,16 +31,7 @@
         }
 
         redirect($urltogo);
-
     }
-
-    $pluginconfig   = get_config('auth/shibboleth');
-    $shibbolethauth = get_auth_plugin('shibboleth');
-
-    // Check whether Shibboleth is configured properly
-    if (empty($pluginconfig->user_attribute)) {
-        print_error('shib_not_set_up_error', 'auth');
-     }
 
 /// If we can find the Shibboleth attribute, save it in session and return to main login page
     if (!empty($_SERVER[$pluginconfig->user_attribute])) {    // Shibboleth auto-login
