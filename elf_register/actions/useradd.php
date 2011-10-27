@@ -19,6 +19,11 @@ $name = get_input('name');
 $first_name = get_input('first_name');
 $last_name = get_input('last_name');
 
+if (trim($password) === '' || ($password !== $password2)) {
+    register_error(elgg_echo('RegistrationException:PasswordMismatch'));
+    forward(REFERER);
+}
+
 $admin = get_input('admin');
 if (is_array($admin)) {
 	$admin = $admin[0];
@@ -47,20 +52,22 @@ try {
 		// @todo ugh, saving a guid as metadata!
 		$new_user->created_by_guid = elgg_get_logged_in_user_guid();
 
+        $elggSite = elgg_get_site_entity();
+
         if (! preg_match('/@(madeup|example)\\.(com|org)$/', $email)) {
             $subject = elgg_echo('useradd:subject');
             $body = elgg_echo('elf_register:useradd:body', array(
                 $name,
-                elgg_get_site_entity()->name,
-                elgg_get_site_entity()->url,
+                $elggSite->name,
+                $elggSite->url,
                 $username,
                 $password,
                 $dcf_id,
             ));
-            notify_user($new_user->guid, elgg_get_site_entity()->guid, $subject, $body);
+            notify_user($new_user->guid, $elggSite->guid, $subject, $body);
         }
 
-		system_message(elgg_echo("adduser:ok", array(elgg_get_site_entity()->name)));
+		system_message(elgg_echo("adduser:ok", array($elggSite->name)));
         system_message(elgg_echo("elf_register:adduser:dcf_id_note", array($dcf_id)));
 
 	} else {
