@@ -110,7 +110,7 @@ if (elgg_get_config('allow_registration')) {
 				// new ELF user! 
                 if (is_file($_SERVER['DOCUMENT_ROOT'] . '/elf-paths.php')) {
                     // forward to log into moodle, then my courses
-                    forward('http://' . $_SERVER['SERVER_NAME'] . '/moodle/auth/shibboleth/?dest=/courses/');
+                    forward('http://' . $_SERVER['SERVER_NAME'] . '/moodle/auth/shibboleth/?dest=/welcome');
                 } else {
                     forward();
                 }

@@ -2,16 +2,14 @@
 
 $english = array(
 
-	'email:validate:subject' => "%s please confirm your email address for %s",
+	'email:validate:subject' => "%s, please confirm your email address for %s",
 	'email:validate:body' => "%s,
 
-Before you can start using %s, you must confirm your email address.
-
-Please confirm your email address by clicking on the link below:
+Please click on the link below to continue your %s registration:
 
 %s
 
-If you can't click on the link, copy and paste it to your browser manually.
+If you can't click on the link, copy and paste it into your browser manually.
 
 %s
 %s
@@ -20,10 +18,10 @@ If you can't click on the link, copy and paste it to your browser manually.
 	'email:confirm:fail' => "Your email address could not be verified...",
 
 	'elf_register:invalid_code_error' => "Error: invalid validation code. Please check your link and try again.",
-	'elf_register:registerok' => "To activate your account, please confirm your email address by clicking on the link we just sent you.",
+	'elf_register:registerok' => "To continue your registration, please check your e-mail.",
 	'elf_register:complete_register_title' => "Complete your registration",	
 
-	'elf_register:register:explanation' => 'Please enter either your email address or DCF ID to register, along with your first and last names.',
+	'elf_register:register:explanation' => 'Please enter your email address (or DCF ID), and first and last names to begin your registration.',
 	'elf_register:register:first_name:label' => "First name",
 	'elf_register:register:last_name:label' => "Last name",
 	'elf_register:register:dcf_id:label' => "DCF ID",
@@ -36,13 +34,15 @@ If you can't click on the link, copy and paste it to your browser manually.
 	'elf_register:register:error:invalid_username' => "Your username must contain only lowercase English alphabet letters and numbers, starting with a letter.",
 	'elf_register:register:error:could_not_generate_username' => "Error: there seems to be a problem with the format of your first or last names.",
 	'elf_register:register:username:label' => "Username",
-	'elf_register:register:username:explanation' => "Your username will be seen by other users in the ELF Community site. "
+	'elf_register:register:username:explanation' => "Your username will be seen by other users in the Leaf Community site. "
 		."We've offered a suggestion, but you may change it. Your username must contain only lowercase English alphabet "
 		."letters and numbers, starting with a letter.",
 	'elf_register:register:display_name:label' => "Display name",
 	'elf_register:register:display_name:explanation' => "Your display name will be how ELF Community Members will see you. We've offered a suggestion, but you may change it.",
 	'elf_register:register:name_change' => "Your first and last name have been changed.",
-		
+    'elf_register:register:continue' => "Continue...",
+    'elf_register:register:sending_email' => "An invitation will be e-mailed to you.",
+
 	/**
  * Request password text text
  */
@@ -94,3 +94,4 @@ You will be logged in as "%s", and you should change your password immediately.
 );
 
 	add_translation("en", $english);
+

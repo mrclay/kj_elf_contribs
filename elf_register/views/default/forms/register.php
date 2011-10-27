@@ -28,7 +28,7 @@ if (elgg_is_sticky_form('register')) {
         ));
         ?>
 </div>
-<div class="yui3-u" style="vertical-align:middle; width:50px; text-align: center">
+<div class="yui3-u" style="width:50px; padding-top:10px; text-align: center">
 	<p><i>OR</i></p>
 </div>
 <div class="yui3-u" style="width:140px; margin-top: 0">
@@ -64,7 +64,11 @@ echo elgg_view('input/captcha');
 
 echo elgg_view('input/hidden', array('name' => 'friend_guid', 'value' => $vars['friend_guid']));
 echo elgg_view('input/hidden', array('name' => 'invitecode', 'value' => $vars['invitecode']));
-echo elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('register')));
+
+echo "<p>"
+     . elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('elf_register:register:continue')))
+     . " <span style='margin-left:5px'>" . elgg_echo('elf_register:register:sending_email') . "</span>"
+     . "</p>";
 ?>
 <script type="text/javascript">
 	$(function() {
