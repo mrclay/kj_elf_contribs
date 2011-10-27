@@ -40,7 +40,7 @@ function shibalike_getStateManager() {
 
 function shibalike_getConfig() {
     $config = new Shibalike\Config();
-    $config->idpUrl = '/';
+    $config->idpUrl = '/community/shibalike/idp';
     return $config;
 }
 

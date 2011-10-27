@@ -41,7 +41,17 @@ function shibalike_init() {
 
 function shibalike_page_handler($page) {		
 	if (isset($page[0])) {
-		if ($page[0] == 'login') {
+        if ($page[0] == 'idp') {
+            if (elgg_is_logged_in()) {
+                elgg_load_library('elgg:shibalike');
+                // update attributes
+                shibalike_handle_login('login', 'user', elgg_get_logged_in_user_entity());
+                // in case the IdP object didn't redirect
+                forward();
+            } else {
+                forward("http://{$_SERVER['SERVER_NAME']}/");
+            }
+        } elseif ($page[0] == 'login') {
             // regular login form is fine
             $loginIframe = elgg_view_page('',elgg_view_form('login'),'shibalike_iframe');
             // rewrite action so full HTTPS login is possible w/o warning
